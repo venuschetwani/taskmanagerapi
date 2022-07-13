@@ -5,7 +5,7 @@ const jwt =require('jsonwebtoken')
 const multer=require('multer')
 const auth=require('../middleware/auth')
 const sharp=require('sharp')
-const {sendWelcomemail,cancelationmail}=require("../emails/account")
+const {sendWelcomemail}=require("../emails/account")
 
 const app = express();
 
@@ -17,8 +17,8 @@ router.post("/users", async (req, res) => {
 try{
      await user.save()
      sendWelcomemail(user.email,user.name)
-     const token= await user.tokenauthkey()
-      res.status(201).send({user,token})
+     
+      res.status(201).send(user)
     }
 catch(e) {
       res.status(404).send();
@@ -32,10 +32,11 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     )
+    user.findByIdAndUpdate(user._id, {lastLogin: Date.now().toISOString()})
     const token = await user.tokenauthkey()
     res.send({user,token})
   } catch (e) {
-    res.status(400).send(e);
+    res.status(500).send(e);
   }
 });
 
@@ -63,7 +64,7 @@ router.post('/nature' ,auth,nature.single( 'nature'),async(req,res)=>{
   const buffer= await sharp(req.file.buffer).resize({width:50,height:50}).png().toBuffer()
   req.user.nature=buffer
   await req.user.save()
-  res.send()
+  res.send('binary file saved')
 },(error,req,res,next)=>{
   res.status(400).send({
     error: error.message

@@ -5,6 +5,7 @@ const User = require("../model/user");
 const app = express();
 const user_router = require("./login");
 const task_router= require("./task");
+const {cancelationmail}=require("../emails/account")
 
 app.use(express.json());
 app.use(user_router);
@@ -30,17 +31,17 @@ app.get("/users/logout", auth, async (req, res) => {
     await req.user.save();
     res.send();
   } catch (e) {
-    res.status(500).send();
+    res.status(401).send();
   }
 });
 
-app.get("/users/logoutAll", auth, async (req, res) => {
+app.get("/users/logoutall", auth, async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
     res.send("user logoutAll");
   } catch (e) {
-    res.status(500).send(e);
+    res.status(401).send(e);
   }
 });
 
@@ -157,7 +158,6 @@ console.log(process.env.APP_HOST);
 
 
 const multer=require('multer');
-const { cancelationmail } = require("../emails/account");
 
 const upload2=multer({
   dest:'images',
@@ -165,17 +165,17 @@ const upload2=multer({
     fileSize:1000000
   },
   fileFilter(req,file,cb){
-    // if(!file.originalname.endsWith('.pdf'))
-    // {
-    //    return cb(new Error('please upload pdffile'))
-    // }
-    // cb(undefined,true)
-
-    if(!file.originalname.match(/(\.doc|docx)$/))//regular expression regex101
+    if(!file.originalname.endsWith('.jpg'))
     {
-      return cb(new Error('please upload word file'))
+       return cb(new Error('please upload pdffile'))
     }
     cb(undefined,true)
+
+    // if(!file.originalname.match(/(\.doc|docx)$/))//regular expression regex101
+    // {
+    //   return cb(new Error('please upload word file'))
+    // }
+    // cb(undefined,true)
   }
 })
 app.post('/upload2',upload2.single('upload2'),(req,res)=>{
