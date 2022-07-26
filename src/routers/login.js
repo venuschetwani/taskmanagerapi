@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../model/user");
-require("../db.js/moongoose");
+require("../db/moongoose");
 const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const auth = require('../middleware/auth')
@@ -27,6 +27,24 @@ router.post("/users", async (req, res) => {
 
 })
 
+
+
+
+// router.get("/users/me",auth,(req,res)=>{
+//   console.log(req.user,"::::::getting one")
+//   res.send(req.user)
+// })
+
+// router.delete("/users/me", auth, async (req, res) => {
+//   try {
+//     await req.user.remove();
+//     cancelationmail(req.user.email,req.user.name)
+//     res.send(req.user);
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// });
+
 router.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredintials(
@@ -35,17 +53,18 @@ router.post("/users/login", async (req, res) => {
     )
 
     await User.lastLogin(user._id)
-     //console.log(user);
+    //console.log(user);
     const token = await user.tokenauthkey()
     const isExpired = await User.checkTokenExpiry(token)
-     console.log(isExpired);
-    if (isExpired){
+    //console.log(isExpired);
+    if (isExpired) {
       res.status(404).send("token is expired")
     }
 
-  
-    else{
-    res.send({ user, token })}
+
+    else {
+      res.send({ user, token })
+    }
   } catch (e) {
     res.status(500).send(e);
   }
@@ -92,7 +111,7 @@ router.delete('/nature', auth, async (req, res) => {
   })
 })
 
-router.get('/:id/nature', async (req, res) => {
+router.get('/nature/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
 
@@ -107,3 +126,7 @@ router.get('/:id/nature', async (req, res) => {
     res.status(404).send()
   }
 })
+
+
+
+

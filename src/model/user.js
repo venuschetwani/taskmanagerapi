@@ -121,7 +121,7 @@ userSchema.statics.lastLogin = async (id) => {
 //token generate
 userSchema.methods.tokenauthkey = async function () {
   const user = this
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '5 seconds' })
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '200 seconds' })
   //console.log(token);
   user.tokens = user.tokens.concat({ token })
   await user.save()
@@ -133,18 +133,18 @@ userSchema.statics.checkTokenExpiry=(token)=>{
   var isExpiredToken=false
 
   var decoded = jwt.decode(token);
-  console.log(decoded);
+  //console.log(decoded);
     
     var dateNow = new Date();
     
   if (decoded.exp*1000 > dateNow.getTime()) {
     isExpiredToken = false;
-    console.log("not expired")
+   // console.log("not expired")
     
   }
   else{
   isExpiredToken = true;
-  console.log("is expired");
+  //console.log("is expired");
  }
  return isExpiredToken
  }

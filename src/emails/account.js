@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 
 const  sendWelcomemail=async(email,name)=>{
    const mailoptions = {
-   from: "venuschetwani@gmail.com",
+   from: "shubhangih.mobio@gmail.com",
    to: email,
    subject: "Thanks for joining!",
    text: `welcome to the app,${name}. let me know how you get along withe the app`,
