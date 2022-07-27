@@ -1,7 +1,6 @@
 
 const mongoose = require("mongoose");
-require("dotenv").config({path: '../config/.env'});
-console.log(process.env.URL)
+require("dotenv").config();
 mongoose
   .connect(process.env.URL, {
     useNewUrlParser: true,

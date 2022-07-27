@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start":"nodemon src/app.js",
     "test": "env-cmd -f ./src/config/test.env jest --watch"
   },
   "jest": {

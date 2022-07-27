@@ -17,16 +17,16 @@ app.use(task_router);
 app.use(auth_router);
 
 app.listen(port, () => console.log(`express on ${port}`));
-console.log(process.env.APP_HOST);
-mongoose
-    .connect(process.env.URL, {
-        useNewUrlParser: true,
-    })
-    .then(() => {
-        console.log("connected");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+// console.log(process.env.APP_HOST);
+// mongoose
+//     .connect(process.env.URL, {
+//         useNewUrlParser: true,
+//     })
+//     .then(() => {
+//         console.log("connected");
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
 
 module.exports = app
