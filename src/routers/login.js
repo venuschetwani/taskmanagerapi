@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../model/user");
-require("../db/moongoose");
+require("../db/mongoose");
 const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const auth = require('../middleware/auth')
@@ -13,13 +13,14 @@ const app = express();
 const router = new express.Router();
 app.use(express.json());
 
-router.post("/users", async (req, res) => {
+router.post("", async (req, res) => {
   const user = new User(req.body);
   try {
     await user.save()
     sendWelcomemail(user.email, user.name)
 
     res.status(201).send(user)
+    
   }
   catch (e) {
     res.status(404).send();
@@ -28,24 +29,7 @@ router.post("/users", async (req, res) => {
 })
 
 
-
-
-// router.get("/users/me",auth,(req,res)=>{
-//   console.log(req.user,"::::::getting one")
-//   res.send(req.user)
-// })
-
-// router.delete("/users/me", auth, async (req, res) => {
-//   try {
-//     await req.user.remove();
-//     cancelationmail(req.user.email,req.user.name)
-//     res.send(req.user);
-//   } catch (e) {
-//     res.status(400).send(e);
-//   }
-// });
-
-router.post("/users/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const user = await User.findByCredintials(
       req.body.email,

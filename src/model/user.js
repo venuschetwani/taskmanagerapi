@@ -121,8 +121,7 @@ userSchema.statics.lastLogin = async (id) => {
 //token generate
 userSchema.methods.tokenauthkey = async function () {
   const user = this
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '200 seconds' })
-  //console.log(token);
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '24h' })
   user.tokens = user.tokens.concat({ token })
   await user.save()
   return token
