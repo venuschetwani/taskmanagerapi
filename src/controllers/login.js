@@ -69,8 +69,9 @@ exports.loginUser= async (req, res) => {
    
 
 exports.natureimage=async (req, res) => {
-    const buffer = await sharp(req.file.buffer).resize({ width: 50, height: 50 }).png().toBuffer()
-    req.user.nature = buffer
+   const buffer = await sharp(req.file.buffer).resize({ width: 50, height: 50 }).png().toBuffer()
+   const data =buffer.toString()
+   req.user.nature = data
     await req.user.save()
     res.send('binary file saved')
   }, (error,  res) => {

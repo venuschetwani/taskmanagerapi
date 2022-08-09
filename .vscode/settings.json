@@ -1,17 +1,10 @@
 {
     "cSpell.words": [
-        "addtask",
-        "allowupdates",
-        "asec",
-        "cancelationmail",
-        "Credintials",
+        "datenow",
         "deleteimage",
         "getimage",
         "natureimage",
         "SECRETKEY",
-        "taskdelete",
-        "taskpatch",
-        "tokenauthkey",
-        "Welcomemail"
+        "tokenauthkey"
     ]
 }

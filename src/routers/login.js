@@ -1,12 +1,9 @@
+require("../db/mongoose");
 const express = require("express");
 const app = express();
-require("../db/mongoose");
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 const router = new express.Router();
-app.use(express.json());
-
-
 const authControllers=require('../controllers/login')
 
 

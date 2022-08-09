@@ -5,6 +5,7 @@ const user_router = require("./routers/user");
 const task_router = require("./routers/task");
 const auth_router = require("./routers/login")
 
+// router.use(express.json());
 
 app.use(express.json());
 app.use(express.urlencoded({

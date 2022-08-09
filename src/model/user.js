@@ -1,9 +1,10 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const jwt = require('jsonwebtoken')
 const task = require('../model/task')
-require("dotenv").config({ path: '../config/.env' });
+
 const datenow = new Date()
 const userSchema = new mongoose.Schema({
   id: {
@@ -51,7 +52,8 @@ const userSchema = new mongoose.Schema({
 
   }],
   nature: {
-    type: Buffer
+    type: Buffer,
+    contentType: String 
   }
 }, {
   timestamps: true
